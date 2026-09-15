@@ -153,7 +153,7 @@
             <nav class="hidden xl:flex items-center gap-1 bg-brand-secondary p-1 rounded-full border border-brand-border" id="desktopNav">
                 <button onclick="navigatePage('home')" id="nav-btn-home" class="nav-tab px-4 py-2 rounded-full text-sm font-bold text-brand-primary bg-white shadow-sm transition">Главная</button>
                 <button onclick="navigatePage('services')" id="nav-btn-services" class="nav-tab px-4 py-2 rounded-full text-sm font-medium text-gray-700 hover:bg-white hover:shadow-sm transition">Услуги</button>
-                <a href="products.html" id="nav-btn-catalog" class="nav-tab px-4 py-2 rounded-full text-sm font-medium text-gray-700 hover:bg-white hover:shadow-sm transition">Товары</a>
+                <button onclick="navigatePage('catalog')" id="nav-btn-catalog" class="nav-tab px-4 py-2 rounded-full text-sm font-medium text-gray-700 hover:bg-white hover:shadow-sm transition">Товары</button>
                 <button onclick="navigatePage('smartsecurity')" id="nav-btn-smartsecurity" class="nav-tab px-4 py-2 rounded-full text-sm font-medium text-gray-700 hover:bg-white hover:shadow-sm transition">Умная безопасность</button>
                 <button onclick="navigatePage('about')" id="nav-btn-about" class="nav-tab px-4 py-2 rounded-full text-sm font-medium text-gray-700 hover:bg-white hover:shadow-sm transition">О нас</button>
                 <button onclick="navigatePage('contacts')" id="nav-btn-contacts" class="nav-tab px-4 py-2 rounded-full text-sm font-medium text-gray-700 hover:bg-white hover:shadow-sm transition">Контакты</button>
@@ -179,7 +179,7 @@
         <div id="mobileMenu" class="hidden xl:hidden absolute top-full left-0 w-full bg-white border-b border-brand-border shadow-g-modal p-6 flex flex-col gap-2 z-40">
             <button onclick="navigatePage('home'); toggleMobileMenu(event);" class="text-left text-base font-medium text-brand-dark py-2.5 border-b border-brand-border">Главная</button>
             <button onclick="navigatePage('services'); toggleMobileMenu(event);" class="text-left text-base font-medium text-brand-dark py-2.5 border-b border-brand-border">Услуги</button>
-            <a href="products.html" class="text-left text-base font-medium text-brand-dark py-2.5 border-b border-brand-border">Товары</a>
+            <button onclick="navigatePage('catalog'); toggleMobileMenu(event);" class="text-left text-base font-medium text-brand-dark py-2.5 border-b border-brand-border">Товары</button>
             <button onclick="navigatePage('smartsecurity'); toggleMobileMenu(event);" class="text-left text-base font-medium text-brand-dark py-2.5 border-b border-brand-border">Умная безопасность</button>
             <button onclick="navigatePage('about'); toggleMobileMenu(event);" class="text-left text-base font-medium text-brand-dark py-2.5 border-b border-brand-border">О нас</button>
             <button onclick="navigatePage('contacts'); toggleMobileMenu(event);" class="text-left text-base font-medium text-brand-dark py-2.5 border-b border-brand-border">Контакты</button>
@@ -213,9 +213,9 @@
                         </p>
                         
                         <div class="flex flex-wrap gap-4 pt-2">
-                            <a href="products.html" class="bg-brand-primary hover:bg-brand-primaryHover text-white font-medium py-3.5 px-7 rounded-full transition shadow-sm flex items-center gap-2 text-sm">
+                            <button onclick="navigatePage('catalog')" class="bg-brand-primary hover:bg-brand-primaryHover text-white font-medium py-3.5 px-7 rounded-full transition shadow-sm flex items-center gap-2 text-sm">
                                 Смотреть товары <i class="fa-solid fa-arrow-right text-xs"></i>
-                            </a>
+                            </button>
                             <button onclick="navigatePage('smartsecurity', 'constructor')" class="bg-brand-secondary hover:bg-gray-200 text-brand-dark font-medium py-3.5 px-7 rounded-full border border-brand-border transition flex items-center gap-2 text-sm">
                                 <i class="fa-solid fa-calculator text-brand-primary"></i> Рассчитать
                             </button>
@@ -408,9 +408,9 @@
                         </p>
 
                         <div class="flex flex-wrap gap-4 pt-2">
-                            <a href="products.html" class="bg-brand-primary hover:bg-brand-primaryHover text-white font-medium py-3.5 px-8 rounded-full transition shadow-sm flex items-center gap-2 text-sm">
+                            <button onclick="navigatePage('catalog')" class="bg-brand-primary hover:bg-brand-primaryHover text-white font-medium py-3.5 px-8 rounded-full transition shadow-sm flex items-center gap-2 text-sm">
                                 Перейти в каталог <i class="fa-solid fa-arrow-right text-xs"></i>
-                            </a>
+                            </button>
                             <button onclick="navigatePage('services')" class="bg-brand-secondary hover:bg-gray-200 text-brand-dark font-medium py-3.5 px-7 rounded-full border border-brand-border transition text-sm">
                                 Наши услуги
                             </button>
@@ -1081,9 +1081,9 @@
                         <i class="fa-solid fa-house text-xs"></i> Главная
                     </button>
                     <span class="text-gray-300">/</span>
-                    <a href="products.html" class="hover:text-brand-primary transition">
+                    <button onclick="navigatePage('catalog')" class="hover:text-brand-primary transition">
                         Каталог
-                    </a>
+                    </button>
                     <span class="text-gray-300">/</span>
                     <button id="pdCategoryBreadcrumb" onclick="navigateCategoryTab(this.innerText)" class="hover:text-brand-primary transition font-semibold text-brand-accent"></button>
                     <span class="text-gray-300">/</span>
@@ -1364,7 +1364,7 @@
                 <ul class="text-xs space-y-2.5">
                     <li><button onclick="navigatePage('home')" class="hover:text-white transition text-left">Главная</button></li>
                     <li><button onclick="navigatePage('services')" class="hover:text-white transition text-left">Услуги</button></li>
-                    <li><a href="products.html" class="hover:text-white transition text-left">Товары</a></li>
+                    <li><button onclick="navigatePage('catalog')" class="hover:text-white transition text-left">Товары</button></li>
                     <li><button onclick="navigatePage('smartsecurity')" class="hover:text-white transition text-left">Умная безопасность</button></li>
                     <li><button onclick="navigatePage('about')" class="hover:text-white transition text-left">О нас</button></li>
                     <li><button onclick="navigatePage('contacts')" class="hover:text-white transition text-left">Контакты</button></li>
