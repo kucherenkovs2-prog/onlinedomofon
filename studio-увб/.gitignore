@@ -1,6 +1,8 @@
 node_modules/
 dist/
 .sanity/
+.agents/
+skills-lock.json
 .env
 .env.*
 !.env.example
