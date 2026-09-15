@@ -250,7 +250,7 @@ async function fetchSanityProducts() {
         "Технические параметры": specifications
     }`;
     const endpoint = `https://${SANITY_PROJECT_ID}.api.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${encodeURIComponent(query)}`;
-    const response = await fetch(endpoint);
+    const response = await fetch(endpoint, { cache: 'no-store' });
     if (!response.ok) throw new Error(`Sanity products request failed: ${response.status}`);
     const payload = await response.json();
     return Array.isArray(payload.result) ? payload.result : [];
