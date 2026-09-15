@@ -249,14 +249,29 @@ async function fetchSanityProducts() {
         "Метка": tag,
         "Технические параметры": specifications
     }`;
-    const endpoint = `https://${SANITY_PROJECT_ID}.api.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${encodeURIComponent(query)}`;
-    const response = await fetch(endpoint, { cache: 'no-store' });
+    const endpoint = `https://${SANITY_PROJECT_ID}.apicdn.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${encodeURIComponent(query)}`;
+    const response = await fetch(endpoint);
     if (!response.ok) throw new Error(`Sanity products request failed: ${response.status}`);
     const payload = await response.json();
     return Array.isArray(payload.result) ? payload.result : [];
 }
 
 async function loadDataSequentially() {
+    const productsPromise = (async () => {
+        try {
+            let products = [];
+            try {
+                products = await fetchSanityProducts();
+            } catch (sanityError) {
+                console.warn('Sanity products error, using Google Apps Script:', sanityError);
+            }
+            if (!products.length) products = await fetchGasStep('get_products', 'products');
+            state.products = products || [];
+            renderCatalog();
+            initConstructor();
+        } catch (e) { console.error("Error loading products:", e); }
+    })();
+
     // 1. КОНТАКТЫ
     try {
         const contacts = await fetchGasStep('get_contacts', 'contacts');
@@ -279,32 +294,20 @@ async function loadDataSequentially() {
         renderBlog();
     } catch (e) { console.error("Error loading blog:", e); }
 
-    // 4. ТОВАРЫ: сначала Sanity, затем старый источник как резерв
-    try {
-        let products = [];
-        try {
-            products = await fetchSanityProducts();
-        } catch (sanityError) {
-            console.warn('Sanity products error, using Google Apps Script:', sanityError);
-        }
-        if (!products.length) products = await fetchGasStep('get_products', 'products');
-        state.products = products || [];
-        renderCatalog();
-        initConstructor();
-    } catch (e) { console.error("Error loading products:", e); }
-
-    // 5. УСЛУГИ
+    // 4. УСЛУГИ
     try {
         const services = await fetchGasStep('get_services', 'services');
         state.services = services || [];
         renderServices();
     } catch (e) { console.error("Error loading services:", e); }
 
-    // 6. ОТЗЫВЫ
+    // 5. ОТЗЫВЫ
     try {
         const reviews = await fetchGasStep('get_reviews', 'reviews');
         state.reviews = reviews || [];
     } catch (e) { console.error("Error loading reviews:", e); }
+
+    await productsPromise;
 }
 
 function updateUIForCity() {
