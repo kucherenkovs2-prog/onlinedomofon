@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог товаров | Умная безопасность XXI века</title>
+    <meta name="description" content="Каталог оборудования для домофонии и систем безопасности в Тюмени.">
+    <link rel="icon" type="image/webp" href="https://i.ibb.co/yc8dR2jb/icon.webp">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/yc8dR2jb/icon.webp">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="antialiased bg-brand-secondary text-brand-dark">
+    <header class="bg-white border-b border-brand-border sticky top-0 z-30">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between gap-4">
+            <a href="index.html" class="flex items-center gap-3" aria-label="Вернуться на главную">
+                <img src="https://i.ibb.co/gZ2tmB9N/1.png" alt="УВБ" class="h-9 md:h-10 w-auto object-contain">
+            </a>
+            <nav class="hidden md:flex items-center gap-5 text-sm font-medium">
+                <a href="index.html" class="text-gray-600 hover:text-brand-primary transition">Главная</a>
+                <a href="products.html" class="text-brand-primary font-bold">Товары</a>
+                <a href="policy.html" class="text-gray-600 hover:text-brand-primary transition">Политика</a>
+            </nav>
+            <a href="index.html#contacts" class="bg-brand-primary hover:bg-brand-primaryHover text-white px-4 py-2.5 rounded-full text-sm font-medium transition">Связаться</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-10 md:py-14">
+        <div class="max-w-3xl mb-8">
+            <p class="text-xs font-bold uppercase tracking-wider text-brand-primary mb-3">Каталог</p>
+            <h1 class="text-3xl md:text-5xl font-bold text-brand-dark mb-3">Оборудование для безопасности</h1>
+            <p class="text-gray-600 text-sm md:text-base">Выберите товары для домофонии, видеонаблюдения и умной безопасности.</p>
+        </div>
+
+        <div id="categoryTabs" class="flex gap-2 overflow-x-auto no-scrollbar pb-3 mb-8" aria-label="Категории товаров"></div>
+        <div id="productsStatus" class="text-sm text-gray-500 py-10 text-center"><span class="loader inline-block align-middle mr-2"></span>Загрузка товаров...</div>
+        <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+    </main>
+
+    <footer class="bg-brand-dark text-gray-400 py-8 mt-10">
+        <div class="container mx-auto px-4 flex flex-col sm:flex-row justify-between gap-3 text-xs">
+            <span>Умная безопасность XXI века.</span>
+            <a href="index.html" class="hover:text-white transition">На главную</a>
+        </div>
+    </footer>
+    <script src="js/products.js"></script>
+</body>
+</html>
