@@ -1,5 +1,8 @@
 // --- CONFIG & API ---
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzEs6TYK95CKK6bTPLH6dUgj-MC82wRHa_WKszWS-LyV4bJBmef9m4yWeh5hy72mJx0bQ/exec";
+const SANITY_PROJECT_ID = 'mrqjlkyb';
+const SANITY_DATASET = 'production';
+const SANITY_API_VERSION = '2025-02-19';
 
 function escapeHtml(value) {
     return String(value ?? '').replace(/[&<>"']/g, char => ({
@@ -230,6 +233,29 @@ async function fetchGasStep(actionName, keyName) {
     return await getFallbackInitData(keyName);
 }
 
+async function fetchSanityProducts() {
+    const query = `*[_type == "product"] | order(_createdAt desc) {
+        "Наименование": name,
+        "Категория": category,
+        "Цена продажи устройства": price,
+        "Краткое описание": shortDescription,
+        "Описание": description,
+        "Ссылка на картинку": imageUrl,
+        "Ссылка на картинку 1": imageUrl1,
+        "Ссылка на картинку 2": imageUrl2,
+        "Город": city,
+        "Статус наличия": status,
+        "Акция": promo,
+        "Метка": tag,
+        "Технические параметры": specifications
+    }`;
+    const endpoint = `https://${SANITY_PROJECT_ID}.api.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${encodeURIComponent(query)}`;
+    const response = await fetch(endpoint);
+    if (!response.ok) throw new Error(`Sanity products request failed: ${response.status}`);
+    const payload = await response.json();
+    return Array.isArray(payload.result) ? payload.result : [];
+}
+
 async function loadDataSequentially() {
     // 1. КОНТАКТЫ
     try {
@@ -253,9 +279,15 @@ async function loadDataSequentially() {
         renderBlog();
     } catch (e) { console.error("Error loading blog:", e); }
 
-    // 4. ТОВАРЫ
+    // 4. ТОВАРЫ: сначала Sanity, затем старый источник как резерв
     try {
-        const products = await fetchGasStep('get_products', 'products');
+        let products = [];
+        try {
+            products = await fetchSanityProducts();
+        } catch (sanityError) {
+            console.warn('Sanity products error, using Google Apps Script:', sanityError);
+        }
+        if (!products.length) products = await fetchGasStep('get_products', 'products');
         state.products = products || [];
         renderCatalog();
         initConstructor();
